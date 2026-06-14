@@ -1,0 +1,140 @@
+==================
+[FUNCTION] Simple function module without parameters
+==================
+FUNCTION zfm_simple.
+ENDFUNCTION.
+---
+
+(source
+  (function_definition
+    name: (identifier)))
+
+==================
+[FUNCTION] Function module with body
+==================
+FUNCTION zfm_body.
+  lv_result = 42.
+ENDFUNCTION.
+---
+
+(source
+  (function_definition
+    name: (identifier)
+    body: (function_body
+      (assignment
+        left: (identifier)
+        right: (number)))))
+
+==================
+[FUNCTION] Function module with importing and exporting sections
+==================
+FUNCTION zfm_read.
+  IMPORTING
+    VALUE(iv_matnr) TYPE matnr
+  EXPORTING
+    VALUE(ev_name)  TYPE string.
+ENDFUNCTION.
+---
+
+(source
+  (function_definition
+    name: (identifier)
+    importing: (parameter_list
+      (value_param_spec
+        name: (identifier))
+      typing: (referred_type
+        name: (identifier)))
+    exporting: (parameter_list
+      (value_param_spec
+        name: (identifier))
+      typing: (abap_type
+        name: (identifier)))
+    body: (function_body)))
+
+==================
+[FUNCTION] Function module with raising
+==================
+FUNCTION zfm_post.
+  IMPORTING
+    iv_bukrs TYPE bukrs
+  RAISING
+    zcx_error.
+ENDFUNCTION.
+---
+
+(source
+  (function_definition
+    name: (identifier)
+    importing: (parameter_list
+      (simple_param_spec
+        name: (identifier))
+      typing: (referred_type
+        name: (identifier)))
+    raising: (raising_list
+      (simple_exception_spec
+        name: (identifier)))
+    body: (function_body)))
+
+==================
+[FUNCTION] Function module with classic exceptions
+==================
+FUNCTION zfm_classic.
+  IMPORTING
+    iv_key TYPE char10
+  EXCEPTIONS
+    not_found.
+ENDFUNCTION.
+---
+
+(source
+  (function_definition
+    name: (identifier)
+    importing: (parameter_list
+      (simple_param_spec
+        name: (identifier))
+      typing: (referred_type
+        name: (identifier)))
+    exceptions: (exception_list
+      (identifier))
+    body: (function_body)))
+
+==================
+[FUNCTION] Function module with all parameter section types
+==================
+FUNCTION zfm_full.
+  IMPORTING
+    iv_key TYPE char10
+  CHANGING
+    cv_flag TYPE abap_bool
+  TABLES
+    tt_data STRUCTURE bapiret2
+  RAISING
+    zcx_error
+    resumable(zcx_warn).
+ENDFUNCTION.
+---
+
+(source
+  (function_definition
+    name: (identifier)
+    importing: (parameter_list
+      (simple_param_spec
+        name: (identifier))
+      typing: (referred_type
+        name: (identifier)))
+    changing: (parameter_list
+      (simple_param_spec
+        name: (identifier))
+      typing: (referred_type
+        name: (identifier)))
+    tables: (parameter_list
+      (simple_param_spec
+        name: (identifier))
+      (structure_param_spec
+        name: (identifier)))
+    raising: (raising_list
+      (simple_exception_spec
+        name: (identifier))
+      (resumable_exception_spec
+        name: (identifier)))
+    body: (function_body)))

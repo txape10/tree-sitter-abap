@@ -1,0 +1,81 @@
+==================
+[SUBMIT] Simple submit
+==================
+SUBMIT zreport.
+---
+
+(source
+  (submit_statement
+    program: (identifier)))
+
+==================
+[SUBMIT] Submit and return
+==================
+SUBMIT zreport AND RETURN.
+---
+
+(source
+  (submit_statement
+    program: (identifier)
+    (submit_option
+      (submit_and_return_spec))))
+
+==================
+[SUBMIT] Submit via selection screen
+==================
+SUBMIT zreport VIA SELECTION-SCREEN.
+---
+
+(source
+  (submit_statement
+    program: (identifier)
+    (submit_option
+      (submit_via_selection_screen_spec))))
+
+==================
+[SUBMIT] Dynamic submit and return
+==================
+SUBMIT (lv_prog) AND RETURN.
+---
+
+(source
+  (submit_statement
+    program: (dynamic_expression
+      value: (identifier))
+    (submit_option
+      (submit_and_return_spec))))
+
+==================
+[SUBMIT] Submit with range and equality and return
+==================
+SUBMIT zreport WITH so_bukrs IN lt_range WITH p_werks = '1000' AND RETURN.
+---
+
+(source
+  (submit_statement
+    program: (identifier)
+    (submit_option
+      (submit_with_spec
+        selector: (identifier)
+        range: (identifier)))
+    (submit_option
+      (submit_with_spec
+        selector: (identifier)
+        value: (string_literal)))
+    (submit_option
+      (submit_and_return_spec))))
+
+==================
+[SUBMIT] Submit using selection set and return
+==================
+SUBMIT zreport USING SELECTION-SET lv_variant AND RETURN.
+---
+
+(source
+  (submit_statement
+    program: (identifier)
+    (submit_option
+      (submit_using_selection_set_spec
+        variant: (identifier)))
+    (submit_option
+      (submit_and_return_spec))))

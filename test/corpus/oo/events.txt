@@ -1,0 +1,99 @@
+==================
+[EVENTS] Raise event without parameters
+==================
+RAISE EVENT button_clicked.
+---
+
+(source
+  (raise_event_statement
+    name: (identifier)))
+
+==================
+[EVENTS] Raise event with exporting parameters
+==================
+RAISE EVENT button_clicked EXPORTING iv_button = lv_btn.
+---
+
+(source
+  (raise_event_statement
+    name: (identifier)
+    exporting: (argument_list
+      (named_argument
+        name: (identifier)
+        value: (identifier)))))
+
+==================
+[EVENTS] Set handler for specific object
+==================
+SET HANDLER lo_ctrl->on_click FOR lo_button.
+---
+
+(source
+  (set_handler_statement
+    handlers: (component_expression
+      subject: (identifier)
+      component: (identifier))
+    for: (identifier)))
+
+==================
+[EVENTS] Set handler for all instances
+==================
+SET HANDLER lo_ctrl->on_click FOR ALL INSTANCES.
+---
+
+(source
+  (set_handler_statement
+    handlers: (component_expression
+      subject: (identifier)
+      component: (identifier))
+    for: (set_handler_all_instances_spec)))
+
+==================
+[EVENTS] Set multiple handlers with activation flag
+==================
+SET HANDLER lo_ctrl->on_click lo_ctrl->on_dblclick FOR lo_button ACTIVATION lv_active.
+---
+
+(source
+  (set_handler_statement
+    handlers: (component_expression
+      subject: (identifier)
+      component: (identifier))
+    handlers: (component_expression
+      subject: (identifier)
+      component: (identifier))
+    for: (identifier)
+    (handler_activation_spec
+      flag: (identifier))))
+
+==================
+[EVENTS] Events declaration in class definition
+==================
+CLASS zcl_x DEFINITION.
+  PUBLIC SECTION.
+    EVENTS: button_clicked EXPORTING VALUE(iv_button) TYPE i.
+    CLASS-EVENTS class_evt EXPORTING VALUE(iv_ts) TYPE timestamp.
+ENDCLASS.
+---
+
+(source
+  (class_definition
+    name: (identifier)
+    (class_body
+      (public_section
+        (events_declaration
+          (event_spec
+            name: (identifier)
+            exporting: (parameter_list
+              (value_param_spec
+                name: (identifier))
+              typing: (abap_type
+                name: (identifier)))))
+        (class_events_declaration
+          (event_spec
+            name: (identifier)
+            exporting: (parameter_list
+              (value_param_spec
+                name: (identifier))
+              typing: (referred_type
+                name: (identifier)))))))))

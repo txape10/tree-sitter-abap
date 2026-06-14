@@ -1,0 +1,96 @@
+==================
+[BADI] Get BADI instance without type
+==================
+GET BADI lo_badi FILTERS bukrs = lv_bukrs werks = lv_werks.
+---
+
+(source
+  (get_badi_statement
+    instance: (identifier)
+    filters: (argument_list
+      (named_argument
+        name: (identifier)
+        value: (identifier))
+      (named_argument
+        name: (identifier)
+        value: (identifier)))))
+
+==================
+[BADI] Get BADI instance with type
+==================
+GET BADI lo_badi TYPE zif_ex_badi.
+---
+
+(source
+  (get_badi_statement
+    instance: (identifier)
+    type: (identifier)))
+
+==================
+[BADI] Get BADI instance with filters
+==================
+GET BADI lo_badi TYPE zif_ex_badi FILTERS bukrs = lv_bukrs.
+---
+
+(source
+  (get_badi_statement
+    instance: (identifier)
+    type: (identifier)
+    filters: (argument_list
+      (named_argument
+        name: (identifier)
+        value: (identifier)))))
+
+==================
+[BADI] Call BADI method without parameters
+==================
+CALL BADI lo_badi->execute.
+---
+
+(source
+  (call_badi_statement
+    method: (component_expression
+      subject: (identifier)
+      component: (identifier))))
+
+==================
+[BADI] Call BADI method with exporting and importing
+==================
+CALL BADI lo_badi->execute EXPORTING iv_param = lv_val IMPORTING ev_result = lv_res.
+---
+
+(source
+  (call_badi_statement
+    method: (component_expression
+      subject: (identifier)
+      component: (identifier))
+    (call_argument_list
+      exporting: (argument_list
+        (named_argument
+          name: (identifier)
+          value: (identifier)))
+      importing: (argument_list
+        (named_argument
+          name: (identifier)
+          value: (identifier))))))
+
+==================
+[BADI] Call BADI method with changing
+==================
+CALL BADI lo_badi->process EXPORTING iv_key = lv_key CHANGING cv_result = lv_res.
+---
+
+(source
+  (call_badi_statement
+    method: (component_expression
+      subject: (identifier)
+      component: (identifier))
+    (call_argument_list
+      exporting: (argument_list
+        (named_argument
+          name: (identifier)
+          value: (identifier)))
+      changing: (argument_list
+        (named_argument
+          name: (identifier)
+          value: (identifier))))))

@@ -60,6 +60,9 @@ module.exports = grammar({
   conflicts: $ => [
     // ... FROM 1 TO 5 STEP 2 TO itab <<< conflict at 'TO <dobj>'
     [$.lines_of],
+    // Inside FUNCTION ... ENDFUNCTION, RAISING list can be followed by another
+    // parameter section whose keyword is also a valid identifier — GLR resolves it.
+    [$.raising_list],
   ],
 
   extras: $ => [
@@ -165,6 +168,17 @@ module.exports = grammar({
       // Dynpro
       $.call_sel_screen_statement,
 
+      // Program flow — cross-program calls
+      $.submit_statement,
+
+      // OO — events (runtime)
+      $.raise_event_statement,
+      $.set_handler_statement,
+
+      // BADIs
+      $.get_badi_statement,
+      $.call_badi_statement,
+
       // Control flow
       $.try_statement,
       $.loop_at_statement,
@@ -208,6 +222,8 @@ module.exports = grammar({
 
       // Program
       $.tables_declaration,
+      $.function_pool_statement,
+      $.function_definition,
       $.form_definition,
       $.initialization_event,
       $.start_of_selection_event,
@@ -228,7 +244,7 @@ module.exports = grammar({
         .filter((f) =>
           f.isFile()
           && f.name.endsWith(".js")
-          && !exclude.find((v) => f.path.includes(v) || f.name == v)
+          && !exclude.find((v) => (f.parentPath || f.path).includes(v) || f.name == v)
         )
         .reduce((acc, file) => {
           const fullPath = path.resolve(file.parentPath || file.path, file.name);

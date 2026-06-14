@@ -24,6 +24,8 @@ module.exports = {
         $.interfaces_declaration,
         $.methods_declaration,
         $.class_methods_declaration,
+        $.events_declaration,
+        $.class_events_declaration,
         $._empty_statement,
     ),
 }

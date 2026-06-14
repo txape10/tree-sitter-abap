@@ -1,0 +1,33 @@
+==================
+Simple function pool declaration
+==================
+FUNCTION-POOL zfugr.
+---
+
+(source
+  (function_pool_statement
+    name: (identifier)))
+
+==================
+Function pool with message class
+==================
+FUNCTION-POOL zfugr MESSAGE-ID zmsg.
+---
+
+(source
+  (function_pool_statement
+    name: (identifier)
+    (default_message_class_spec
+      id: (identifier))))
+
+==================
+Function pool with line size
+==================
+FUNCTION-POOL zfugr LINE-SIZE 132.
+---
+
+(source
+  (function_pool_statement
+    name: (identifier)
+    (line_size_spec
+      size: (number))))
