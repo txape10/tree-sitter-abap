@@ -12,10 +12,11 @@ construcciones (legacy) que el original no parsea. La mayoría del tiempo este r
 
 ## Estado actual — Fase 1 completada ✅
 
-**Fecha:** 2026-06-14
+**Gramática:** 2026-06-14 · **Binding recompilado y verificado en repo 6:** 2026-06-15
 
 Se han añadido 5 nuevas construcciones al parser, motivadas por el análisis del repo 7 sobre
 los edges de más impacto para el grafo de código. Tests: 418 passing, 0 regresiones.
+`_binding.pyd` recompilado con MSVC 14.51 (VS BuildTools 18); repo 6 confirma los 6 nodos nuevos sin ERROR.
 
 ### Construcciones añadidas en esta iteración
 
@@ -92,6 +93,6 @@ el grafo que no estaban cubiertas.
 
 - **Permisivo > estricto.** Nunca quitar reglas "porque ya no se usan".
 - **Test de regresión siempre.** Si no hay test, el cambio no está hecho.
-- **Los cambios no llegan solos al repo 6:** hay que recompilar y reinstalar en editable allí.
-- En Windows, la compilación C es el punto de fricción más probable; el toolchain debe estar listo.
+- **Los cambios no llegan solos al repo 6:** recompilar con el comando documentado en `CLAUDE.md` (sección "Compilar y reinstalar el binding Python").
+- En Windows, la compilación necesita `DISTUTILS_USE_SDK=1` + `vswhere` en PATH; el comando exacto está en `CLAUDE.md`.
 - **Node.js v24+:** `Dirent.path` fue renombrado a `parentPath` — ya corregido en `grammar.js`.

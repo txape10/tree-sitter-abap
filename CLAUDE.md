@@ -89,6 +89,37 @@ Construcciones añadidas en el fork txape10 respecto al upstream:
 
 Fix adicional: compatibilidad Node.js v24+ (`Dirent.parentPath` vs `Dirent.path`) en `grammar.js`.
 
+## Compilar y reinstalar el binding Python (Windows)
+
+Tras cualquier cambio de gramática (`tree-sitter generate` → nuevo `src/parser.c`) hay que
+recompilar la extensión C. El paquete está instalado en editable desde este repo, así que repo 6
+ve el cambio inmediatamente sin reinstalar.
+
+**Prerequisitos (una sola vez):**
+```
+pip install setuptools wheel
+```
+
+**Compilación (cada vez que cambie la gramática):**
+```powershell
+$pyexe = "C:\Users\rchapado\AppData\Local\Programs\Python\Python313\python.exe"
+$vswhere = "C:\Program Files (x86)\Microsoft Visual Studio\Installer"
+& cmd.exe /c "set PATH=%PATH%;$vswhere && `"C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvarsall.bat`" x64 && set DISTUTILS_USE_SDK=1 && set MSSdk=1 && cd `"C:\Users\rchapado\Proyectos Claude\8 - tree-sitter-abap`" && `"$pyexe`" setup.py build_ext --inplace"
+```
+
+El `.pyd` se copia automáticamente a `bindings/python/tree_sitter_abap/_binding.pyd`.
+
+**Verificación rápida:**
+```python
+import tree_sitter_abap as abap
+from tree_sitter import Language, Parser
+p = Parser(Language(abap.language()))
+assert not p.parse(b"FUNCTION-POOL zfugr.").root_node.has_error
+```
+
+> `DISTUTILS_USE_SDK=1` + `vswhere` en PATH son necesarios porque `setuptools` lanza `cl.exe`
+> en un subproceso que no hereda el entorno de `vcvarsall.bat`.
+
 ## Estilo
 
 Consistente con la gramática existente del upstream. Commits: `feat:`/`fix:`/`docs:`. Mantener la
